@@ -23,7 +23,6 @@ These are deferred, not forgotten — flagging them now avoids scope creep and h
 - Backend, auth, or persistence layer
 - Real-time presence or user counts
 - Liked tracks, saved queues, or any user-specific persistence
-- Any placeholder data presented as if it were live (e.g. fake "active users")
 
 ## Stack
 
