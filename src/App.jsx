@@ -1,7 +1,7 @@
 import { MehfilScene } from "./components/scene/MehfilScene";
 import { Clock } from "./components/ui/Clock";
 import { MusicPlayer } from "./components/player/MusicPlayer";
-import { AmbientParticles } from "./components/ui/AmbientParticles";
+import { AmbientParticles } from "./components/ui/Ambientparticles";
 import { PresenceIndicator } from "./components/ui/Presenceindicator";
 import { useYouTubePlayer } from "./hooks/useYouTubePlayer";
 import { playlist } from "./data/track";
