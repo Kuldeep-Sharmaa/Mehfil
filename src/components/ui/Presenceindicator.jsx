@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import "./Presenceindicator.css";
+import "./PresenceIndicator.css";
 
 const MIN_COUNT = 4;
 const MAX_COUNT = 97;
