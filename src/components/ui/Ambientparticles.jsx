@@ -1,4 +1,4 @@
-import "./AmbientParticles.css";
+import "./Ambientparticles.css";
 
 /**
  * AmbientParticles - Faint warm embers drifting upward, echoing the
