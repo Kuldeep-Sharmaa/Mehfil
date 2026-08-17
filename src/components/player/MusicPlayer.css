@@ -1,0 +1,390 @@
+/**
+ * MusicPlayer.css
+ * A single calm pill — no expand sheet, no extra panels.
+ * All motion is slow and eased; nothing bounces, nothing flashes.
+ */
+
+.music-player {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 560px;
+  padding: 10px 16px 10px 10px;
+  border-radius: 60px;
+  background: rgba(20, 20, 30, 0.45);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  position: relative;
+}
+
+/* Real YouTube player — kept in DOM for audio playback,
+   but visually hidden entirely. */
+.youtube-mount {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---------- Disk ---------- */
+
+.disk-wrapper {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  min-width: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  animation: spin-record 9s linear infinite;
+  animation-play-state: paused;
+}
+
+.disk-wrapper.is-spinning {
+  animation-play-state: running;
+}
+
+@keyframes spin-record {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.track-disk-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  /* YouTube's hqdefault thumbnail often has black letterbox bars
+     baked into the image itself. Scaling up crops those out. */
+  transform: scale(1.45);
+  transform-origin: center;
+  animation: track-fade-in 0.4s ease;
+}
+
+@keyframes track-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(1.55);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1.45);
+  }
+}
+
+/* Faint vinyl grooves overlaying the thumbnail — rotate together
+   with the wrapper since they're a sibling inside the same element. */
+.vinyl-grooves {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.16);
+  stroke-width: 0.6;
+}
+
+.vinyl-grooves .vinyl-center {
+  fill: rgba(10, 10, 14, 0.55);
+  stroke: rgba(255, 255, 255, 0.2);
+}
+
+/* ---------- Track info ---------- */
+
+.player-main {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.track-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.track-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  font-family: var(--sans);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: text-fade-in 0.4s ease;
+}
+
+.track-artist {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-family: var(--sans);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@keyframes text-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Progress bar ---------- */
+
+.progress-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.progress-bar {
+  position: relative;
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.progress-bar::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+}
+
+.progress-fill {
+  position: relative;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-warm), #ffb87a);
+  transition: width 0.1s linear;
+  border-radius: 3px;
+}
+
+/* Scrub handle — appears on hover for a tactile feel (pointer devices only) */
+.progress-fill::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffb87a;
+  transform: translateY(-50%) scale(0);
+  opacity: 0;
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+  box-shadow: 0 0 4px rgba(255, 184, 122, 0.6);
+}
+
+@media (hover: hover) {
+  .progress-bar:hover .progress-fill::after {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Buffering — a slow shimmer sweep, calm rather than a spinner */
+.progress-bar.is-buffering::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.18),
+    transparent
+  );
+  animation: shimmer-sweep 1.6s ease-in-out infinite;
+}
+
+@keyframes shimmer-sweep {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.time-display {
+  display: flex;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--text-secondary);
+  letter-spacing: 0.4px;
+  font-family: var(--sans);
+}
+
+.current-time,
+.duration {
+  min-width: 28px;
+  text-align: center;
+}
+
+.separator {
+  opacity: 0.6;
+}
+
+/* ---------- Controls ---------- */
+
+.player-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.control-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
+  border-radius: 50%;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.1s ease;
+  font-size: 0;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.control-btn:active {
+  transform: scale(0.92);
+}
+
+.play-btn {
+  width: 44px;
+  height: 44px;
+  background: var(--accent-warm);
+  border-color: var(--accent-warm);
+  color: var(--bg-dark);
+}
+
+.play-btn:hover {
+  background: #ffb87a;
+  border-color: #ffb87a;
+}
+
+/* Quiet breathing glow while playing — echoes the bulb/lantern glow */
+.play-btn.is-playing {
+  animation: play-glow 2.6s ease-in-out infinite;
+}
+
+@keyframes play-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(244, 164, 96, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 6px rgba(244, 164, 96, 0);
+  }
+}
+
+.nav-btn,
+.mute-btn {
+  width: 34px;
+  height: 34px;
+}
+
+.control-btn svg {
+  display: block;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 640px) {
+  .music-player {
+    max-width: 94vw;
+    gap: 10px;
+    padding: 8px 12px 8px 8px;
+  }
+
+  .disk-wrapper {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+  }
+
+  .track-title {
+    font-size: 12px;
+  }
+
+  .track-artist {
+    font-size: 10px;
+  }
+
+  .player-controls {
+    gap: 6px;
+  }
+
+  .play-btn {
+    width: 38px;
+    height: 38px;
+  }
+
+  .nav-btn,
+  .mute-btn {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 380px) {
+  .nav-btn {
+    display: none; /* keep pill compact on very narrow screens */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .disk-wrapper,
+  .play-btn.is-playing,
+  .progress-bar.is-buffering::after,
+  .track-disk-img,
+  .track-title {
+    animation: none;
+  }
+}

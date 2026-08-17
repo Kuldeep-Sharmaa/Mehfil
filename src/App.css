@@ -1,0 +1,97 @@
+.app {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--bg-dark);
+}
+
+/* UI Overlay */
+.ui-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* UI elements get pointer events */
+.ui-overlay button {
+  pointer-events: auto;
+}
+
+/* Top UI sections */
+.ui-top-left,
+.ui-top-right {
+  display: flex;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.ui-top-left {
+  justify-content: flex-start;
+  gap: 14px;
+  padding: var(--safe-margin);
+}
+
+/* Quiet separator between the clock and the presence indicator */
+.ui-top-left > *:not(:last-child) {
+  position: relative;
+  padding-right: 14px;
+}
+
+.ui-top-left > *:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.ui-top-right {
+  justify-content: flex-end;
+  padding: var(--safe-margin);
+  align-self: flex-end;
+}
+
+/* Bottom UI - Player */
+.ui-bottom {
+  display: flex;
+  justify-content: center;
+  padding: var(--safe-margin);
+  pointer-events: auto;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .ui-top-left,
+  .ui-top-right {
+    padding: var(--safe-margin-small);
+  }
+
+  .ui-bottom {
+    padding: var(--safe-margin-small);
+  }
+}
+
+@media (max-width: 480px) {
+  .ui-top-left,
+  .ui-top-right,
+  .ui-bottom {
+    padding: var(--safe-margin-small);
+  }
+
+  .ui-top-left {
+    gap: 10px;
+    justify-content: space-between;
+  }
+}

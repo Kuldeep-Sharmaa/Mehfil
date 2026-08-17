@@ -1,0 +1,101 @@
+/**
+ * AmbientParticles.css
+ * Sits between the scene and the UI overlay. Pointer-events disabled
+ * entirely — purely decorative, never intercepts taps/clicks.
+ */
+
+.ambient-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.ember {
+  position: absolute;
+  bottom: -10px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--accent-warm);
+  opacity: 0;
+  box-shadow: 0 0 6px 1px rgba(244, 164, 96, 0.6);
+  animation: ember-rise linear infinite;
+}
+
+@keyframes ember-rise {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.5;
+  }
+  85% {
+    opacity: 0.25;
+  }
+  100% {
+    transform: translate(var(--drift, 12px), -92vh);
+    opacity: 0;
+  }
+}
+
+/* Staggered position, timing and drift so it never feels mechanical */
+.ember-1 {
+  left: 6%;
+  --drift: 18px;
+  width: 2px;
+  height: 2px;
+  animation-duration: 19s;
+  animation-delay: 0s;
+}
+.ember-2 {
+  left: 22%;
+  --drift: -14px;
+  animation-duration: 24s;
+  animation-delay: 3s;
+}
+.ember-3 {
+  left: 41%;
+  --drift: 10px;
+  width: 2px;
+  height: 2px;
+  animation-duration: 17s;
+  animation-delay: 6s;
+}
+.ember-4 {
+  left: 63%;
+  --drift: -20px;
+  animation-duration: 22s;
+  animation-delay: 1.5s;
+}
+.ember-5 {
+  left: 79%;
+  --drift: 16px;
+  width: 2px;
+  height: 2px;
+  animation-duration: 20s;
+  animation-delay: 8s;
+}
+.ember-6 {
+  left: 90%;
+  --drift: -10px;
+  animation-duration: 26s;
+  animation-delay: 4.5s;
+}
+
+/* Fewer, calmer particles on small screens — keep it whisper-quiet */
+@media (max-width: 480px) {
+  .ember-5,
+  .ember-6 {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ember {
+    animation: none;
+    display: none;
+  }
+}

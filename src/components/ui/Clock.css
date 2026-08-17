@@ -1,0 +1,39 @@
+/**
+ * Clock.css - Local time display + quiet greeting
+ */
+
+.clock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.clock time {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  letter-spacing: 0.7px;
+  font-family: var(--sans);
+  text-transform: uppercase;
+}
+
+.clock-greeting {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  opacity: 0.55;
+  letter-spacing: 0.4px;
+  font-family: var(--sans);
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .clock time {
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .clock-greeting {
+    font-size: 10px;
+  }
+}

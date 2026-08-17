@@ -2,7 +2,7 @@
 
 ## Visual Direction
 
-The experience should read as a quiet, nostalgic night shared with friends — not a polished commercial product. The artwork is the primary visual element; every UI decision is subordinate to it.
+The experience should read as a quiet, nostalgic night shared with friends - not a polished commercial product. The artwork is the primary visual element; every UI decision is subordinate to it.
 
 If a design choice makes the page feel more like a website and less like a scene, it's the wrong choice.
 
@@ -26,12 +26,11 @@ Typeface direction: expressive, slightly imperfect — a brush/hand feel rather 
 
 Controls, in order of visual priority:
 
-1. Entry interaction
-2. Play / pause
-3. Progress
-4. Mute / sound
-5. Local time
-6. `Change Vibe` (future affordance, not yet functional)
+1. Play / pause
+2. Progress
+3. Mute / sound
+4. Local time
+5. `Change Vibe` (future affordance, not yet functional)
 
 Controls sit on top of the artwork, not beside it in a bar/dashboard/panel. No navigation, cards, menus, badges, or ornamental UI chrome — if it doesn't map to a listed control, it doesn't belong on the page.
 
